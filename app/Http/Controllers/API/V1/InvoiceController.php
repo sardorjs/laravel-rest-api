@@ -21,7 +21,11 @@ class InvoiceController extends Controller
      */
     public function index(InvoiceFilterRequest $request): InvoiceCollection
     {
-        $filteredResults = (new InvoicesFilter($request))->apply(Invoice::query())->paginate(BaseSettings::PAGINATION_BY_DEFAULT);
+        $filteredResults = (new InvoicesFilter($request))
+            ->apply(Invoice::query())
+            ->paginate(BaseSettings::PAGINATION_BY_DEFAULT)
+            ->withQueryString();
+
         return new InvoiceCollection($filteredResults);
     }
 

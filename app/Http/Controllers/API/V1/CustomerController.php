@@ -23,9 +23,12 @@ class CustomerController extends Controller
         CustomerFilterRequest $request,
     ): CustomerCollection
     {
-        $filteredResult = (new CustomersFilter($request))->apply(Customer::query())->paginate(BaseSettings::PAGINATION_BY_DEFAULT);
+        $filteredResults = (new CustomersFilter($request))
+            ->apply(Customer::query())
+            ->paginate(BaseSettings::PAGINATION_BY_DEFAULT)
+            ->withQueryString();
 
-        return new CustomerCollection($filteredResult);
+        return new CustomerCollection($filteredResults);
     }
 
     /**
