@@ -36,6 +36,9 @@ class CustomersFilter extends AbstractFilter
             ->when($this->request->filled('postalCode'), function (Builder $query){
                 $query->where('postal_code', 'LIKE', "%".$this->request->input('postalCode')."%");
             })
+            ->when($this->request->boolean('includeInvoices'), function (Builder $query){
+                $query->with('invoices');
+            })
             ->orderBy(
                 $this->request->input('sortBy', 'id'),
                 $this->request->input('sortOrder', 'desc'),
