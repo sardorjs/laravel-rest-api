@@ -50,10 +50,13 @@ class CustomerController extends Controller
 
     /**
      * Update the specified resource in storage.
+     * @param UpdateCustomerRequest $request
+     * @param Customer $customer
      */
     public function update(UpdateCustomerRequest $request, Customer $customer)
     {
-        //
+        $customer->update($request->all());
+        return new CustomerResource($customer);
     }
 
     /**

@@ -43,7 +43,10 @@ class StoreCustomerRequest extends FormRequest
         ]);
     }
 
-    public function messages()
+    /**
+     * @return array[]
+     */
+    public function messages(): array
     {
         return [
             "type" => "The type must be whether I or B!"
