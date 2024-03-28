@@ -2,21 +2,27 @@
 
 namespace App\Http\Controllers\API\V1;
 
+use App\Filters\V1\InvoicesFilter;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreInvoiceRequest;
 use App\Http\Requests\UpdateInvoiceRequest;
+use App\Http\Requests\V1\InvoiceFilterRequest;
 use App\Http\Resources\V1\InvoiceCollection;
 use App\Http\Resources\V1\InvoiceResource;
 use App\Models\Invoice;
+use App\Settings\V1\BaseSettings;
 
 class InvoiceController extends Controller
 {
     /**
      * Display a listing of the resource.
+     * @param InvoiceFilterRequest $request
+     * @return InvoiceCollection
      */
-    public function index()
+    public function index(InvoiceFilterRequest $request): InvoiceCollection
     {
-        return new InvoiceCollection(Invoice::paginate());
+        $filteredResults = (new InvoicesFilter($request))->apply(Invoice::query())->paginate(BaseSettings::PAGINATION_BY_DEFAULT);
+        return new InvoiceCollection($filteredResults);
     }
 
     /**

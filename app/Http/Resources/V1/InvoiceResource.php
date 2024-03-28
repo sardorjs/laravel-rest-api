@@ -23,8 +23,8 @@ class InvoiceResource extends JsonResource
             'customerId' => $this->resource->customer_id,
             'amount' => $this->resource->amount,
             'status' => $this->resource->status,
-            'billedDate' => $this->resource->billed_date->format('d/m/y H:i:s'),
-            'paidDate' => $this->resource->paid_date?->format('d/m/y H:i:s'),
+            'billedDate' => $this->resource->billed_date->format('Y-m-d H:i:s'),
+            'paidDate' => $this->resource->paid_date?->format('Y-m-d H:i:s'),
         ];
     }
 }

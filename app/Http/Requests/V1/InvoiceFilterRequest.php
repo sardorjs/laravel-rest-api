@@ -24,12 +24,14 @@ class InvoiceFilterRequest extends FormRequest
     {
         return [
             'id' => 'integer',
+            'customerId' => 'integer',
             'amountFrom' => 'integer',
             'amountTo' => 'integer',
-            'status' => 'string',
-            'billedDateFrom' => 'date',
-            'billedDateTo' => 'date',
-            'paidDate' => ['nullable', 'date'],
+            'status' => Rule::in(['B', 'P', 'V']),
+            'billedDateFrom' => 'date', // 2023-05-16
+            'billedDateTo' => 'date', // 2023-05-16
+            'paidDateFrom' => ['date'], // 2023-05-16
+            'paidDateTo' => ['date'], // 2023-05-16
             'sortBy' => Rule::in(['id']),
             'sortOrder' => Rule::in(['asc', 'desc']),
         ];
@@ -42,7 +44,7 @@ class InvoiceFilterRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'sortBy' => "sortBy: Query can be Sorted By 'customerId'",
+            'sortBy' => "sortBy: Query can be Sorted By 'id'",
             'sortOrder' => "sortOrder: must be asc or desc",
         ];
     }

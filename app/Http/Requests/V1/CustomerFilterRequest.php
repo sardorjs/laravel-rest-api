@@ -43,7 +43,7 @@ class CustomerFilterRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'sortBy' => "sortBy: Query can be Sorted By 'customerId'",
+            'sortBy' => "sortBy: Query can be Sorted By 'id'",
             'sortOrder' => "sortOrder: must be asc or desc",
         ];
     }
