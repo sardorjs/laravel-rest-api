@@ -2,21 +2,30 @@
 
 namespace App\Http\Controllers\API\V1;
 
+use App\Filters\V1\CustomersFilter;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCustomerRequest;
 use App\Http\Requests\UpdateCustomerRequest;
+use App\Http\Requests\V1\CustomerFilterRequest;
 use App\Http\Resources\V1\CustomerCollection;
 use App\Models\Customer;
 use App\Http\Resources\V1\CustomerResource;
+use App\Settings\V1\BaseSettings;
 
 class CustomerController extends Controller
 {
     /**
      * Display a listing of the resource.
+     * @param CustomerFilterRequest $request
+     * @return CustomerCollection
      */
-    public function index()
+    public function index(
+        CustomerFilterRequest $request,
+    ): CustomerCollection
     {
-        return new CustomerCollection(Customer::paginate());
+        $filteredResult = (new CustomersFilter($request))->apply(Customer::query())->paginate(BaseSettings::PAGINATION_BY_DEFAULT);
+
+        return new CustomerCollection($filteredResult);
     }
 
     /**
