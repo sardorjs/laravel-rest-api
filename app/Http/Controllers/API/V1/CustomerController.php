@@ -11,6 +11,7 @@ use App\Http\Resources\V1\CustomerCollection;
 use App\Models\Customer;
 use App\Http\Resources\V1\CustomerResource;
 use App\Settings\V1\BaseSettings;
+use Illuminate\Http\Request;
 
 class CustomerController extends Controller
 {
@@ -33,6 +34,8 @@ class CustomerController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     * @param StoreCustomerRequest $request
+     * @return CustomerResource
      */
     public function store(StoreCustomerRequest $request)
     {
@@ -41,10 +44,12 @@ class CustomerController extends Controller
 
     /**
      * Display the specified resource.
+     * @param Customer $customer
+     * @return CustomerResource
      */
     public function show(Customer $customer)
     {
-        return new CustomerResource($customer);
+        return new CustomerResource($customer->loadMissing('invoices'));
     }
 
 
@@ -52,6 +57,7 @@ class CustomerController extends Controller
      * Update the specified resource in storage.
      * @param UpdateCustomerRequest $request
      * @param Customer $customer
+     * @return CustomerResource
      */
     public function update(UpdateCustomerRequest $request, Customer $customer)
     {
